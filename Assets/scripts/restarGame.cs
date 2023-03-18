@@ -12,6 +12,10 @@ public class restarGame : MonoBehaviour {
         SceneManager.LoadScene(name);
     }
 
+    public void Play(string name) {
+        SceneManager.LoadScene(name);
+    }
+
     public void CloseGame() {
         UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();

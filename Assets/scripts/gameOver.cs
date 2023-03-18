@@ -20,4 +20,8 @@ public class gameOver : MonoBehaviour {
     public void ReloadLevel() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void BackMenu(string name) {
+        SceneManager.LoadScene(name);
+    }
 }
