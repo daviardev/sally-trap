@@ -17,6 +17,7 @@ public class health : MonoBehaviour {
     }
 
     public void Damage(Vector2 position) {
+        shakeCamera.Instance.MoveCamera(5, 5, .5f);
         life--;
         StartCoroutine(LoseControl());
         mv.Back(position);
