@@ -19,6 +19,13 @@ public class move : MonoBehaviour {
     float timeCoyote;
     float timeCoyoteTime = .1f;
 
+    // shell
+    bool isGrab;
+    GameObject shell;
+    float kickForce = 500f;
+    public Transform hand;
+    public GameObject shellObject;
+
     // ground
     bool isGround;
     float ratioFoot = .03f;
@@ -33,8 +40,56 @@ public class move : MonoBehaviour {
     public GameObject player;
     public Rigidbody2D rb;
 
+
     void Start() {
         rb.GetComponent<Rigidbody2D>();
+    }
+
+    public void KickShell() {
+        var rigidShell = shellObject.GetComponent<Rigidbody2D>();
+        var rb = GetComponent<Rigidbody2D>();
+        var scaleLocal = rb.transform.localScale;
+
+        isGrab = false;
+
+        rigidShell.AddForce(new Vector2(kickForce * scaleLocal.x, 0));
+    }
+
+    public void GrabShell() {
+        if (shell == null) {
+            shell = shellObject;
+
+            shell.transform.parent = this.transform;
+            var positionHand = hand.transform.localPosition;
+            isGrab = true;
+
+            shell.transform.localPosition = new Vector2(positionHand.x * hand.localScale.x, positionHand.y);
+
+            anim.SetBool("isHolding", true);
+            var rigidShell = shellObject.GetComponent<Rigidbody2D>();
+            Object.Destroy(rigidShell);
+
+            shell.layer = (int) levelManager.Layers.grabShell;
+        }
+    }
+
+    public void DropShell() {
+        if (shell != null) {
+            shell.transform.parent = null;
+            shell.gameObject.AddComponent<Rigidbody2D>();
+
+            var rigidShell = shell.GetComponent<Rigidbody2D>();
+            rigidShell.freezeRotation = true;
+            rigidShell.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            rigidShell.gravityScale = 3;
+
+            KickShell();
+
+            shell.layer = (int) levelManager.Layers.shell;
+            anim.SetBool("isHolding", false);
+            isGrab = false;
+            shell = null;
+        }
     }
 
     void FixedUpdate() {
@@ -54,6 +109,10 @@ public class move : MonoBehaviour {
         
         if (canMove) {
             Move();
+        }
+
+        if (shell != null && !Input.GetKey(KeyCode.Z)) {
+            DropShell();
         }
 
         // Better jump
