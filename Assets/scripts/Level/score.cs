@@ -1,18 +1,25 @@
-using UnityEngine;
 using TMPro;
-using System.Collections;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class score : MonoBehaviour {
-    int Score = 0;
-    public TMP_Text textScore;
+   int Score = 0;
+   
+   public TMP_Text textScore;
 
-    void Start() {
-        Score = 0;
-    }
+   Dictionary<int, bool> collectedCoins = new Dictionary<int, bool>();
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.tag == "coin") {
+   void Start() {
+    textScore.text = " X " + Score;
+   }
+
+   void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag == "coin") {
+            int coinID = other.gameObject.GetInstanceID();
+            if (collectedCoins.ContainsKey(coinID) && collectedCoins[coinID]) {
+                return;
+            }
+            collectedCoins[coinID] = true;
             Score++;
             textScore.text = " X " + Score;
         }

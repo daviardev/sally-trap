@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6396039755466019126}
   - component: {fileID: 6396039755466019127}
   - component: {fileID: 6396039755466019129}
-  - component: {fileID: 6396039755466019128}
+  - component: {fileID: 1648018485714719367}
   m_Layer: 3
   m_Name: Sally
   m_TagString: Player
@@ -199,7 +199,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &6396039755466019128
+--- !u!114 &1648018485714719367
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
