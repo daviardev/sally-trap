@@ -6,8 +6,8 @@ public class shell : MonoBehaviour {
     float impulse;
     float velocityX;
 
-    float velocityMax = 16f;
-    float aceleration = 300f;
+    float velocityMax = 12f;
+    float aceleration = 100f;
 
     float sizeRay = .4f;
     float lenghtRay = .99f;
