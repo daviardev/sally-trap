@@ -9,10 +9,6 @@ public class score : MonoBehaviour {
 
    Dictionary<int, bool> collectedCoins = new Dictionary<int, bool>();
 
-   void Start() {
-    textScore.text = " X " + Score;
-   }
-
    void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "coin") {
             int coinID = other.gameObject.GetInstanceID();

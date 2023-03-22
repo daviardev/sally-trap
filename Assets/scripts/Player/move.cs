@@ -22,10 +22,9 @@ public class move : MonoBehaviour {
     // shell
     bool isGrab;
     GameObject shell;
-    float kickForce = 500f;
+    float kickForce = 700f;
     public Transform hand;
     public GameObject shellObject;
-
     // ground
     bool isGround;
     float ratioFoot = .03f;

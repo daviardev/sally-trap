@@ -3,11 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class trigger : MonoBehaviour {
+    public GameObject player;
+    private Dictionary<int, GameObject> shells = new Dictionary<int, GameObject>();
+
     public void OnTriggerEnter2D(Collider2D other) {
-        var control = transform.parent.GetComponent<move>();
+        var control = player.GetComponent<move>();
 
         if (other.gameObject.tag == "shell") {
             var shell = other.gameObject.GetComponent<shell>();
+            int shellId = shell.gameObject.GetInstanceID();
 
             if (shell.Movent()) {
                 var positionFoot = control.transform.Find("ground");
@@ -28,6 +32,10 @@ public class trigger : MonoBehaviour {
                             shell.Movent(false);
                             var rb = shell.GetComponent<Rigidbody2D>();
                             rb.velocity = new Vector2();
+
+                            if (!shells.ContainsKey(shellId)) {
+                                shells.Add(shellId, shell.gameObject);
+                            }
                         }
                     }
                 }
@@ -37,6 +45,17 @@ public class trigger : MonoBehaviour {
                 } else {
                     control.KickShell();
                 }
+            }
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D other) {
+        if (other.gameObject.tag == "shell") {
+            var shell = other.gameObject.GetComponent<shell>();
+            int shellId = shell.gameObject.GetInstanceID();
+
+            if (shells.ContainsKey(shellId)) {
+                shells.Remove(shellId);
             }
         }
     }
