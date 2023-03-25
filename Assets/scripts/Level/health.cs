@@ -10,10 +10,12 @@ public class health : MonoBehaviour {
     public event EventHandler diePlayer;
     
     move mv;
+    Reloj clock;
 
     void Start() {
         life = hearts.Length;
         mv = GetComponent<move>();
+        clock = GetComponent<Reloj>();
     }
 
     public void Damage(Vector2 position) {

@@ -10,7 +10,7 @@ public class Reloj : MonoBehaviour {
     [SerializeField] TMP_Text text;
 
     private float remainder;
-    private bool inMotion;
+    public bool inMotion;
 
     private void Awake() {
         remainder = (min * 60) + seg;
@@ -22,7 +22,7 @@ public class Reloj : MonoBehaviour {
             remainder -= Time.deltaTime;
             if (remainder < 1) {
                 inMotion = true;
-                SceneManager.LoadScene(1);
+                move.dead = true;
             }
 
             int tempMin = Mathf.FloorToInt(remainder / 60);

@@ -25,9 +25,13 @@ public class move : MonoBehaviour {
     float kickForce = 700f;
     public Transform hand;
     public GameObject shellObject;
+
     // ground
     bool isGround;
     float ratioFoot = .03f;
+
+    // dead
+    public static bool dead = false;
 
     // rebouce
     float rebounceVelocity = 16f;
@@ -106,13 +110,11 @@ public class move : MonoBehaviour {
 
         anim.SetBool("isGround", isGround ? true : false);
         
-        if (canMove) {
-            Move();
-        }
+        if (canMove) Move();
 
-        if (shell != null && !Input.GetKey(KeyCode.Z)) {
-            DropShell();
-        }
+        if (dead) Dead();
+
+        if (shell != null && !Input.GetKey(KeyCode.Z)) DropShell();
 
         // Better jump
         if (rb.velocity.y < 0) {
@@ -162,5 +164,10 @@ public class move : MonoBehaviour {
         }
         // stop anim of wall
         anim.SetFloat("velX", directionX != 0 && isGround ? 1 : 0);
+    }
+
+    public void Dead() {
+        dead = true;
+        Destroy(gameObject);
     }
 }
